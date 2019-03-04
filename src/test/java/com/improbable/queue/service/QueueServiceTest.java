@@ -38,6 +38,7 @@ public class QueueServiceTest {
 
     @Test
     public void getPositionInQueueWhenIdentifierExistsShouldReturnPosition() {
+        queueService.clear();
         queueService.join(UserStub.builder().build());
         queueService.join(UserStub.builder().build());
         queueService.join(UserStub.builder().build());
@@ -45,6 +46,20 @@ public class QueueServiceTest {
         queueService.join(UserStub.builder().build());
         queueService.join(UserStub.builder().build());
         assertThat(queueService.getPositionInQueue(identifier)).isEqualTo(3);
+    }
+
+    @Test
+    public void getPositionInQueueWhenManyUsersShouldReturnPosition() {
+        queueService.clear();
+        UserStub userToCheck = null;
+        for (int i = 0; i < 1_000_000; i++) {
+            UserStub userStub = UserStub.builder().build();
+            queueService.join(userStub);
+            if (i == 234_567) {
+                userToCheck = userStub;
+            }
+        }
+        assertThat(queueService.getPositionInQueue(userToCheck.getIdentifier())).isEqualTo(234_567);
     }
 
     @Test
@@ -130,6 +145,4 @@ public class QueueServiceTest {
         queueService.join(UserStub.builder().build());
         assertThat(queueService.getFirst()).isEqualTo(firstUser);
     }
-
-
 }

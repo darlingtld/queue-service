@@ -73,7 +73,7 @@ public class QueueController {
         if (isAdmittable) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {
-            userStub.setIsAdmittable(Boolean.TRUE);
+            userStub.setAdmittable(true);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
     }

@@ -8,5 +8,6 @@ import lombok.Data;
 public class UserStub {
     private String identifier;
     private String username;
-    private Boolean isAdmittable;
+    private boolean isAdmittable;
+    private int queueIndex;
 }
